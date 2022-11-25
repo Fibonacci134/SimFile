@@ -1,0 +1,12 @@
+
+
+
+
+
+"C:\Users\%userprofile%\.conda\envs\Simswap\Lib\site-packages\insightface\model_zoo\model_zoo.py"
+
+replace the that file with the one i send you
+
+you can do it via cmd line as long as you adjust the path, go into the directory with the new file and type
+
+>> copy .\model_zoo.py  C:\Users\%userprofile%\.conda\envs\Simswap\Lib\site-packages\insightface\model_zoo\model_zoo.py

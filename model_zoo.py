@@ -7,7 +7,7 @@
 import os
 import os.path as osp
 import glob
-import onnxruntime as ort
+import onnxruntime
 from .arcface_onnx import *
 from .scrfd import *
 
@@ -20,20 +20,7 @@ class ModelRouter:
         self.onnx_file = onnx_file
 
     def get_model(self):
-        session = ort.InferenceSession(self.onnx_file,providers= [
-    ('TensorrtExecutionProvider', {
-        'device_id': 0,
-        'trt_max_workspace_size': 4147483648,
-        'trt_fp16_enable': True,
-    }),
-    ('CUDAExecutionProvider', {
-        'device_id': 0,
-        'arena_extend_strategy': 'kNextPowerOfTwo',
-        'gpu_mem_limit': 3* 1024 * 1024 * 1024,
-        'cudnn_conv_algo_search': 'EXHAUSTIVE',
-        'do_copy_in_default_stream': True,
-    })
-] )
+        session = onnxruntime.InferenceSession(self.onnx_file, providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
         input_cfg = session.get_inputs()[0]
         input_shape = input_cfg.shape
         outputs = session.get_outputs()
